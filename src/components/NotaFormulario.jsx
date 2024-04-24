@@ -3,10 +3,11 @@ import React, { useState } from 'react';
 function EncuestaFormulario() {
     const [titulo, setTitulo] = useState('');
     const [dueno, setDueno] = useState('');
+    const [fecha, setFecha] = useState('');
 
     const handleSubmit = async (event) => {
-        event.preventDefault();  // Prevenir el comportamiento predeterminado del formulario
-
+        event.preventDefault(); // Prevenir el comportamiento predeterminado del formulario
+    
         const url = `http://localhost:8000/encuestas/`; // URL de la API
         
         try {
@@ -16,13 +17,13 @@ function EncuestaFormulario() {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ titulo, dueno: parseInt(dueno, 10) })
+                body: JSON.stringify({ titulo, dueno: parseInt(dueno, 10), fecha }) // Asegúrate de incluir la fecha
             });
-
+    
             if (!response.ok) {
                 throw new Error(`Error: ${response.status}`);
             }
-
+    
             const result = await response.json();
             console.log('Encuesta creada:', result);
             alert('Encuesta creada con éxito!');
@@ -30,10 +31,12 @@ function EncuestaFormulario() {
             console.error('Error al crear la encuesta:', error);
             alert('Error al crear la encuesta');
         }
-
+    
         setTitulo('');
         setDueno('');
+        setFecha(''); // Limpiar el campo de fecha también
     };
+    
 
     return (
         <form onSubmit={handleSubmit} className='text-black'>
