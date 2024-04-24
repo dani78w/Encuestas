@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Card from './Card';
 
 function ListaEncuestas() {
     const [encuestas, setEncuestas] = useState([]);
@@ -26,17 +27,25 @@ function ListaEncuestas() {
     }, []); // La dependencia vacía asegura que solo se ejecute una vez al montar el componente
 
     return (
-        <div>
-            <h2>Lista de Encuestas</h2>
-            <ul>
-                {/* Mapear las encuestas y renderizar cada una */}
+
+
+
+            
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-4 lg:gap-8">
+        
                 {encuestas.map((encuesta) => (
-                    <li key={encuesta.id}>
-                        <strong>Título:</strong> {encuesta.titulo} - <strong>Dueño:</strong> {encuesta.dueno}
-                    </li>
+
+                    <Card
+                        title={encuesta.titulo}
+                        description=""
+                        episodeNumber={encuesta.id}
+                        timeLength={encuesta.id + 1}
+                        guests={encuesta.dueno}
+                    />
+
                 ))}
-            </ul>
-        </div>
+            </div>
+    
     );
 }
 
