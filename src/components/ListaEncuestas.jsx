@@ -8,7 +8,7 @@ function ListaEncuestas() {
         const obtenerEncuestas = async () => {
             try {
                 // Realizar solicitud GET a la API para obtener las encuestas
-                const response = await fetch('http://localhost:8000/encuestas/');
+                const response = await fetch('http://188.127.169.12:8000/encuestas/');
                 if (!response.ok) {
                     throw new Error(`Error: ${response.status}`);
                 }
