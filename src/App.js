@@ -1,17 +1,22 @@
 import logo from './logo.svg';
-
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import './screens/FeedScreen'
 import './App.css';
 import NotaFormulario from './components/NotaFormulario';
 import ListaEncuestas from './components/ListaEncuestas'; 
+import FeedScreen from './screens/FeedScreen';
+import EncuestaScreen from './screens/EncuestaScreen';
+
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo color-indigo-500" alt="logo" />
-        <NotaFormulario/>
-        <ListaEncuestas/>
-      </header>
-    </div>
+    <Router>
+      <Routes>
+
+        <Route path="/" element={ <FeedScreen/> } />
+        <Route path="/new" element={ <EncuestaScreen/> } />
+
+      </Routes>
+    </Router>
   );
 }
 
