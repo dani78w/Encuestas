@@ -9,7 +9,7 @@ function EncuestaFormulario({control}) {
     const handleSubmit = async (event) => {
         event.preventDefault(); // Prevenir el comportamiento predeterminado del formulario
     
-        const url = `http://localhost:8000/encuestas/`; // URL de la API
+        const url = `http://188.127.169.12/:8000/encuestas/`; // URL de la API
         
         try {
             // Enviar la solicitud POST a la API
