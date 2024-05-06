@@ -27,7 +27,6 @@ function EncuestaFormulario({control}) {
     
             const result = await response.json();
             console.log('Encuesta creada:', result);
-            alert('Encuesta creada con éxito!');
         } catch (error) {
             console.error('Error al crear la encuesta:', error);
             alert('Error al crear la encuesta');
