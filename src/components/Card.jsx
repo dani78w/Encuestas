@@ -1,11 +1,12 @@
 import React from "react";
+import './card.css'; // Asegúrate de importar tu archivo CSS
 
 function Card({ title, description, episodeNumber, timeLength, guests }) {
     if (!Array.isArray(guests)) {
         guests = [];
     }
     return (
-<article class="rounded-xl bg-white p-4 ring ring-indigo-50 p-6 lg:p-8 text-gray-700">
+<article class="rounded-xl bg-white p-4 ring ring-indigo-50 p-6 lg:p-8 text-gray-700 fadeInUp">
     <div class="flex items-start gap-8">
             <div
             class=" grid size-20 shrink-0 place-content-center rounded-full border-2 border-indigo-500"
