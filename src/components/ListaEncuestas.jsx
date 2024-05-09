@@ -31,7 +31,7 @@ function ListaEncuestas({ recarga }) {
         <Card
             title={encuesta.titulo}
             description=""
-            episodeNumber={encuesta.id}
+            id={encuesta.id}
             timeLength={encuesta.id + 1}
             guests={encuesta.dueno}
         />
