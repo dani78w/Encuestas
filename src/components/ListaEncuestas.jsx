@@ -7,7 +7,7 @@ function ListaEncuestas({ recarga }) {
     useEffect(() => {
         const obtenerEncuestas = async () => {
             try {
-                const response = await fetch('http://188.127.169.12:8000/encuestas/');
+                const response = await fetch('http://danielarribas.work:8000/encuestas/');
                 if (!response.ok) {
                     throw new Error(`Error: ${response.status}`);
                 }

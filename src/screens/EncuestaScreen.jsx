@@ -8,7 +8,7 @@ function CreadorEncuesta() {
     useEffect(() => {
         const fetchEncuesta = async () => {
             try {
-                const response = await fetch(`http://188.127.169.12:8000/encuesta/${id}`);
+                const response = await fetch(`http://danielarribas.work:8000/encuesta/${id}`);
                 if (!response.ok) {
                     throw new Error('No se pudo obtener la encuesta');
                 }
