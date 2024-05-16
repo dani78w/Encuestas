@@ -9,10 +9,10 @@ import psycopg2
 
 def get_db_connection():
     conn = psycopg2.connect(
-        host="localhost",
-        database="tu_base_de_datos",
-        user="tu_usuario",
-        password="tu_contraseña"
+        host="danielarribas.work",
+        database="encuestas",
+        user="postgres",
+        password="dani1234"
     )
     return conn
 
