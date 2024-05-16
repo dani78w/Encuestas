@@ -11,7 +11,7 @@ app = FastAPI()
 # Configurar CORS para permitir todas las conexiones desde cualquier origen
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*","192.168.1.134","192.168.1.186","188.127.169.12:3000","188.127.169.12:3000"],  # Permitir todas las conexiones desde cualquier origen
+    allow_origins=["*","192.168.1.134","192.168.1.186","188.127.169.12:3000","188.127.169.12:3000","danielarribas.work","danielarribas.work:3000"],  # Permitir todas las conexiones desde cualquier origen
     allow_credentials=True,
     allow_methods=["GET", "POST", "PUT", "DELETE"],
     allow_headers=["*"],
@@ -28,7 +28,7 @@ app.include_router(encuesta_router)
 
 def get_db_connection():
     conn = psycopg2.connect(
-        host="188.127.169.12",
+        host="danielarribas.work",
         port="5432",
         database="postgres",
         user="postgres",
