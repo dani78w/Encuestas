@@ -25,3 +25,13 @@ async def read_encuestas():
     cursor.close()
     conn.close()
     return encuestas
+
+@app.get("/encuesta/", response_model=List[dict])
+async def read_encuestas():
+    conn = get_db_connection()
+    cursor = conn.cursor(cursor_factory=RealDictCursor)
+    cursor.execute("SELECT * FROM encuesta")
+    encuestas = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return encuestas

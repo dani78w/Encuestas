@@ -45,3 +45,19 @@ async def read_encuestas():
     cursor.close()
     conn.close()
     return encuestas
+
+@app.get("/encuesta/{id}")
+async def read_encuestas(id: int):
+    conn = get_db_connection()
+    cursor = conn.cursor(cursor_factory=RealDictCursor)
+    try:
+        cursor.execute("SELECT * FROM encuesta WHERE id = %s", (id,))
+        encuestas = cursor.fetchall()
+        if not encuestas:
+            raise HTTPException(status_code=404, detail="Encuesta not founddd")
+        return encuestas
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+    finally:
+        cursor.close()
+        conn.close()
