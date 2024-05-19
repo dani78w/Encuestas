@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import { extendTheme } from '@mui/joy/styles';
+import Button from '@mui/joy/Button';
 
 function CreadorEncuesta() {
     const { id } = useParams();
@@ -21,13 +23,26 @@ function CreadorEncuesta() {
 
         fetchEncuesta();
     }, [id]);
-
+    const theme = extendTheme({
+        components: {
+          JoySkeleton: {
+            defaultProps: {
+              animation: 'wave',
+            },
+          },
+        },
+      });
+      
     if (!encuesta) {
-        return <p></p>;
+        return <div className="w-[100vw] h-[100vh] flex">
+                    <Button loading variant="soft" className="w-full">
+                    Soft
+                    </Button>
+                </div>
     }
 
     const { titulo, descripcion, fecha, dueno } = encuesta;
-
+    console.log(titulo)
     return (
         <section className="bg-white">
             <div className="mx-auto max-w-screen-xl px-4 py-12 sm:px-6 md:py-16 lg:px-8">
@@ -65,7 +80,7 @@ function CreadorEncuesta() {
                 </div>
 
                 {/* Botón flotante con enlace a /home */}
-                <Link to="/" className="fixed bottom-8 right-8 bg-blue-500 text-white rounded-full p-4 flex items-center justify-center">
+                <Link to="/" className="fixed bottom-24 right-8 bg-blue-500 text-white rounded-full p-4 flex items-center justify-center">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
                     </svg>
