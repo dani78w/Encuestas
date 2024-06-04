@@ -1,12 +1,31 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { extendTheme } from '@mui/joy/styles';
-import Button from '@mui/joy/Button';
+import Button from '@mui/material/Button';
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
+import Typography from '@mui/material/Typography';
+import {
+    Chart as ChartJS,
+    ArcElement,
+    Tooltip,
+    Legend,
+} from 'chart.js';
+import { Pie } from 'react-chartjs-2';
+import HomeIcon from '@mui/icons-material/Home';
+
+ChartJS.register(ArcElement, Tooltip, Legend);
 
 function EncuestaScreen() {
     const { id } = useParams();
     const [encuesta, setEncuesta] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [selectedOption, setSelectedOption] = useState(null);
+    const [clickCounts, setClickCounts] = useState({
+        option1: 0,
+        option2: 0,
+        option3: 0,
+    });
 
     useEffect(() => {
         const fetchEncuesta = async () => {
@@ -28,71 +47,108 @@ function EncuestaScreen() {
         fetchEncuesta();
     }, [id]);
 
+    const handleButtonClick = (option) => {
+        if (selectedOption === option) {
+            setSelectedOption(null);
+            setClickCounts((prevCounts) => ({
+                ...prevCounts,
+                [option]: prevCounts[option] - 1,
+            }));
+        } else {
+            setSelectedOption(option);
+            setClickCounts((prevCounts) => ({
+                ...prevCounts,
+                [option]: prevCounts[option] + 1,
+            }));
+        }
+    };
+
+    const data = {
+        labels: ['Opción 1', 'Opción 2', 'Opción 3'],
+        datasets: [
+            {
+                label: 'Número de clics',
+                data: [clickCounts.option1, clickCounts.option2, clickCounts.option3],
+                backgroundColor: ['#66bb6a', '#ab47bc', '#ffca28'],
+                hoverOffset: 4
+            },
+        ],
+    };
+
+    const options = {
+        responsive: true,
+        plugins: {
+            legend: {
+                position: 'top',
+            },
+            title: {
+                display: true,
+                text: 'Número de veces que se ha pulsado cada botón',
+            },
+        },
+    };
+
     if (loading) {
         return (
-            <div className="w-[100vw] h-[100vh] flex justify-center items-center">
-                <Button loading variant="soft">
-                    Cargando...
-                </Button>
-            </div>
+            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+                <CircularProgress />
+            </Box>
         );
     }
 
     if (!encuesta) {
         return (
-            <div className="w-[100vw] h-[100vh] flex justify-center items-center">
-                <p>Error al cargar la encuesta.</p>
-            </div>
+            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+                <Typography variant="h6" component="div">Error al cargar la encuesta.</Typography>
+            </Box>
         );
     }
 
     const { titulo, descripcion, fecha, dueno } = encuesta;
 
     return (
-        <section className="bg-white min-h-screen">
-            <div className="mx-auto max-w-screen-xl px-4 py-12 sm:px-6 md:py-16 lg:px-8">
-                <div className="flex flex-col rounded-lg px-4 py-8 text-center">
-                    <h2 className="text-4xl font-bold text-blue-600 sm:text-4xl">{titulo}</h2>
-                    <p className="mt-4 text-lg text-gray-600">{descripcion}</p>
-                </div>
-
-                <div className="mt-8 sm:mt-12">
-                    <dl className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-                        <div className="flex flex-col rounded-lg bg-green-50 px-4 py-8 text-center">
-                            <dd className="text-2xl font-extrabold text-green-600 md:text-5xl">Opcion 1</dd>
-                        </div>
-                        <div className="flex flex-col rounded-lg bg-purple-50 px-4 py-8 text-center">
-                            <dd className="text-2xl font-extrabold text-purple-600 md:text-5xl">Opcion 2</dd>
-                        </div>
-                        <div className="flex flex-col rounded-lg bg-yellow-50 px-4 py-8 text-center">
-                            <dd className="text-2xl font-extrabold text-yellow-600 md:text-5xl">Opcion 3</dd>
-                        </div>
-
-                        <div className="flex flex-col rounded-lg bg-white px-4 py-8 text-center">
-                            <dt className="order-last text-lg font-medium text-gray-500">ID</dt>
-                            <dd className="text-4xl font-extrabold text-blue-600 md:text-3xl">{id}</dd>
-                        </div>
-
-                        <div className="flex flex-col rounded-lg bg-white px-4 py-8 text-center">
-                            <dt className="order-last text-lg font-medium text-gray-500">Fecha</dt>
-                            <dd className="text-4xl font-extrabold text-blue-600 md:text-xl">{fecha}</dd>
-                        </div>
-
-                        <div className="flex flex-col rounded-lg bg-white px-4 py-8 text-center">
-                            <dt className="order-last text-lg font-medium text-gray-500">Dueño</dt>
-                            <dd className="text-4xl font-extrabold text-blue-600 md:text-3xl">{dueno}</dd>
-                        </div>
-                    </dl>
-                </div>
-
-                {/* Botón flotante con enlace a /home */}
-                <Link to="/" className="fixed bottom-24 right-8 bg-blue-500 text-white rounded-full p-4 flex items-center justify-center shadow-lg">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
-                    </svg>
-                </Link>
-            </div>
-        </section>
+        <Container>
+            <Box sx={{ textAlign: 'center', my: 4 }}>
+                <Typography variant="h2" component="h2" sx={{ color: 'blue' }}>
+                    {titulo}
+                </Typography>
+                <Typography variant="h6" component="p" sx={{ color: 'gray' }}>
+                    {descripcion}
+                </Typography>
+            </Box>
+            <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2, flexWrap: 'wrap', my: 4 }}>
+                <Button
+                    variant="contained"
+                    sx={{ backgroundColor: '#E6FFFA', color: '#66bb6a' }}
+                    onClick={() => handleButtonClick('option1')}
+                    disabled={selectedOption !== null && selectedOption !== 'option1'}
+                >
+                    Opción 1
+                </Button>
+                <Button
+                    variant="contained"
+                    sx={{ backgroundColor: '#F3E8FF', color: '#ab47bc' }}
+                    onClick={() => handleButtonClick('option2')}
+                    disabled={selectedOption !== null && selectedOption !== 'option2'}
+                >
+                    Opción 2
+                </Button>
+                <Button
+                    variant="contained"
+                    sx={{ backgroundColor: '#FFFAE5', color: '#ffca28' }}
+                    onClick={() => handleButtonClick('option3')}
+                    disabled={selectedOption !== null && selectedOption !== 'option3'}
+                >
+                    Opción 3
+                </Button>
+            </Box>
+            <Box sx={{ my: 4 }}>
+                <Pie data={data} options={options} />
+            </Box>
+            <Link to="/" className="fixed bottom-24 right-8 bg-blue-500 text-white rounded-full p-4 flex items-center justify-center shadow-lg">
+                <HomeIcon />
+            </Link>
+        </Container>
     );
 }
 
