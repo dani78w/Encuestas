@@ -31,7 +31,7 @@ def get_db_connection():
         host="danielarribas.work",
         port="5432",
         database="postgres",
-        user="postgres",
+        user="dani",
         password="dani1234"
     )
     return conn
