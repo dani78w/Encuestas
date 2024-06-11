@@ -4,7 +4,7 @@ from sqlalchemy.orm import sessionmaker
 
 # Configura la URL de la base de datos aquí. 
 # Deberías extraer la URL de la base de datos y otros valores sensibles en variables de entorno o un archivo de configuración.
-SQLALCHEMY_DATABASE_URL = "postgresql://postgres:dani1234@danielarribas.work:5432/postgres"
+SQLALCHEMY_DATABASE_URL = "postgresql://dani:dani1234@danielarribas.work:5432/Encuestas"
 
 # Crea el motor de la base de datos con la URL proporcionada.
 engine = create_engine(SQLALCHEMY_DATABASE_URL)

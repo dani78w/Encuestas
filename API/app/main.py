@@ -30,7 +30,7 @@ def get_db_connection():
     conn = psycopg2.connect(
         host="danielarribas.work",
         port="5432",
-        database="postgres",
+        database="Encuestas",
         user="dani",
         password="dani1234"
     )

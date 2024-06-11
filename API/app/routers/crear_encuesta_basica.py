@@ -10,7 +10,7 @@ import psycopg2
 
 
 # Configuración de la conexión a la base de datos PostgreSQL
-DATABASE_URL = "postgresql://postgres:dani1234@danielarribas.work:5432/postgres"
+DATABASE_URL = "postgresql://dani:dani1234@danielarribas.work:5432/Encuestas"
 conn = psycopg2.connect(DATABASE_URL)
 cursor = conn.cursor()
 
